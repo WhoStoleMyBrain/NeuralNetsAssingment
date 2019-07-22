@@ -1,0 +1,14 @@
+### Comments on the lstm implemented by Marco Wetter, 1763546
+
+I modified the template at a few places, and tried to keep track of everything in this file.
+
+The first thing is the gradientcheck. I modified it, so that it outputs a more detailed and more compact block of information for the gradients, instead of giving an error for each bad gradient. 
+
+I also played with the hyperparameters, e.g. max_iterations, learning rate, hidden_size etc., but tried to get them back to the initial values in the final file. 
+
+One very crucial element was the variable "p" in the "train" option of the program. I indented it, so that it only gets reset at the beginning of the loop. (line 320 in lstm_MarcoWetter.py). This was different in the lstm template in contrast to the elman-rnn.py file. I figured that it must be indented, as otherwise the LSTM RNN would always use the same data for training(the first sequence_length characters of the txt file). 
+I further had some debugging output, and wrote some additional functions to create plots of the loss. These additions are in the file with the suffix "DebugAndPlots". From these i also got the plots included in the resporitory. These show some weird behavior of the LSTM RNN over the epoch.
+
+If the correct p value is used, the net does no converge and keeps oszillating over many iterations. On the other hand, if the correct p value is used we get a converging net with some more or less plausibile output. The issue here is that for some reason the net does not work, even though the gradient check does give me (almost) no error on the gradient. I even added a bias term for the net in the derivatives of tanh and sigmoid, in case they got saturated, but it didn't change anything.
+
+For some reason I still get an error for the gradient check at some points, but they are quite rare (about 2-5 in total bad gradients over all the calculated gradients). I don't know what causes this and didn't find any solution. Hopefully this is no issue. 
